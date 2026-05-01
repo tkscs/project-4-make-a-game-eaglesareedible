@@ -1,3 +1,6 @@
-I want to create a snake game
-
-The smallest piece I've already started doing is the movement, but I don't have the tools for animations if I want them, or lengthening the snake yet. 
+I want to create a snake game with the ambitious goal of adding in animations.
+– Menu and reset screen
+Small pieces
+– Movement
+– eating the apple and spawning a new one
+– Having customizable levels. 
