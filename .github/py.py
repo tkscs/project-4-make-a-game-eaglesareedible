@@ -6,9 +6,6 @@ import numpy
 
 py.init()
  
-FPS = 60
-FramePerSec = py.time.Clock()
- 
 # Predefined some colors
 BLUE  = (0, 0, 255)
 RED   = (255, 0, 0)
@@ -21,7 +18,7 @@ SCREEN_WIDTH = 300
 SCREEN_HEIGHT = 300
 
 displayscreen = py.display.set_mode((320, 320), flags = py.RESIZABLE)
-displayscreen.fill(WHITE)
+displayscreen.fill(BLACK)
 py.display.set_caption("Game")
 
 
@@ -30,7 +27,6 @@ object2 = py.Rect((10, 10), (100, 100))
 
 print(object1.colliderect(object2))
 FPS = py.time.Clock()
-FPS.tick(66)
 py.init()
 scalefactor = 20/66
 
@@ -40,9 +36,8 @@ class Player(py.sprite.Sprite):
         super().__init__()
         self.image = py.image.load("Player.png")
         self.rect = self.image.get_rect()
-        self.rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
         self.direction = (0, 0)
-        self.position = numpy.array([6, 8])
+        self.position = numpy.array([160, 160])
     def update(self):
         pressed_keys = py.key.get_pressed()
         if pressed_keys[K_UP]:
@@ -88,17 +83,23 @@ all_sprites.add(A1)
 
 while True:
     count = 0
+    FPS.tick(66)
+    fps = FPS.get_fps()
+    if fps > 0:
+        scalefactor = 40/fps
     for event in py.event.get():
         if event.type == QUIT:
             py.quit()
             sys.exit()
-    displayscreen.fill(WHITE)
+    displayscreen.fill(BLACK)
     P1.update()
     P1.draw(displayscreen)
     A1.draw(displayscreen)
+    if FPS.get_fps() != 66:
+        print(FPS.get_fps())
     if py.sprite.spritecollideany(P1, apples):
         py.display.update()
-        A1 = Apple()
+        A1.rect.center = (random.randint(40,SCREEN_WIDTH-40), random.randint(40,SCREEN_WIDTH-40))
         count +=1
 
     py.display.update()
